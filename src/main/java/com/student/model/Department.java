@@ -30,6 +30,7 @@ public class Department implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
     String departmentName;
+    
     @ManyToMany
     Set<StudentData> students;
 }

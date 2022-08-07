@@ -6,6 +6,9 @@ package com.student.repository;
 
 import com.student.database.ConnectionDatabase;
 import com.student.model.Results;
+import com.student.model.StudentData;
+import com.student.model.Subjects;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
@@ -18,17 +21,17 @@ public class Result_repository {
 
     EntityManager em = ConnectionDatabase.getEntityManager();
 
-    public Results createStudentResults(long id, String student, String subject) {
+    public Results createStudentResults(long studentId, long subjectId, int score) {
 
         EntityTransaction txn = em.getTransaction();
 
+        StudentData student = em.find(StudentData.class, studentId);
+
+        Subjects subject = em.find(Subjects.class, subjectId);
+
         txn.begin();
 
-        Results rs = new Results();
-
-        rs.setId(id);
-//        rs.setStudent(student);
-//        rs.setSubjects(subjects);
+        Results rs = new Results(student, subject, score);
 
         em.persist(rs);
         txn.commit();
@@ -36,32 +39,23 @@ public class Result_repository {
 
     }
 
-    public Results findStudentResultByName(String student) {
+    public List<Results> findStudentResultById(long id) {
 
-        Query myQuery = em.createNamedQuery("SELECT * FROM Results WHERE Results = " + student);
+        Query myQuery = em.createNamedQuery("SELECT * FROM Results WHERE Results = " + id);
 
-        Results rs = (Results) myQuery.getSingleResult();
+        List<Results> rs = myQuery.getResultList();
 
         return rs;
 
     }
 
-    public Results updateResultByName(String student) {
+    public Results updateResultByid(long id, int score, long subjectId) {
 
-        Query myQuery = em.createNamedQuery("UPDATE RESULTS WHERE Results =" + student);
+        Results results = em.find(Results.class, id);
 
-        Results rs = (Results) myQuery.getSingleResult();
+        results.setScore(score);
 
-        return rs;
-    }
-
-    public Results updateResultBySubject(String subject) {
-
-        Query myQuery = em.createNamedQuery("UPDATE RESULTS WHERE Results =" + subject);
-
-        Results rs = (Results) myQuery.getSingleResult();
-
-        return rs;
+        return results;
     }
 
     public Results deleteResultById(long id) {

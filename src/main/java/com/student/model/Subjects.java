@@ -4,6 +4,7 @@
  */
 package com.student.model;
 
+import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +25,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Subjects {
+public class Subjects implements Serializable{
      @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)  
      long id;

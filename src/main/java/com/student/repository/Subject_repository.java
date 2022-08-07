@@ -35,7 +35,7 @@ public class Subject_repository {
     
 //    public Subjects getSubjectByName (String subjectName){
 //        
-//        Query myQuery = em.createNamedQuery("")
+//        Query myQuery = em.createNamedQuery();
 //    }
     public Subjects deleteSubjects (String subjectName){
         
@@ -51,6 +51,4 @@ public class Subject_repository {
 
         return sb;
     }
-    
-   
 }

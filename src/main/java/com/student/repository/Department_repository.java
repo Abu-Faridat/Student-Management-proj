@@ -6,11 +6,8 @@ package com.student.repository;
 
 import com.student.database.ConnectionDatabase;
 import com.student.model.Department;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
 
 /**
  *
@@ -20,7 +17,7 @@ public class Department_repository {
 
     EntityManager em = ConnectionDatabase.getEntityManager();
 
-    public Department createDepartment(String departmentName, String students) {
+    public Department createDepartment(String departmentName) {
         EntityTransaction txn = em.getTransaction();
 
         txn.begin();
@@ -33,22 +30,22 @@ public class Department_repository {
         return dt;
 
     }
+    
+    public Department updateDepartmentBYName(String departmentName,long id) {
 
-    public Department updateDepartmentBYName(String departmentName) {
+       Department dt = em.find(Department.class, id);
 
-        Query myQuery = em.createNamedQuery("UPDATE DEPARTMENT WHERE Department = " + departmentName);
-
-        Department dt = (Department) myQuery.getSingleResult();
+        dt.setDepartmentName(departmentName);
 
         return dt;
 
     }
 
-    public Department findDepartmentByName(String departmentName) {
-        Query myQuery = em.createNamedQuery("SELECT * FROM DEPARTMENT WHERE Department = " + departmentName);
+    public Department findDepartmentByName(long id) {
+        
+       Department dt = em.find(Department.class, id);
 
-        Department dt = (Department) myQuery.getSingleResult();
-
+      
         return dt;
     }
 
